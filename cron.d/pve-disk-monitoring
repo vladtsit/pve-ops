@@ -1,0 +1,5 @@
+# m  h  dom mon dow  user  command
+# Publish MQTT state every 10 minutes
+*/10 *   *   *   *   root  /usr/local/sbin/pve-disk-mqtt-publish.sh >> /var/log/smartd-alert.log 2>&1
+# Weekly Saturday 10:00 summary
+0    10  *   *   6   root  /usr/local/sbin/pve-disk-weekly-summary.sh

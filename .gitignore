@@ -1,0 +1,6 @@
+# Never commit live credentials
+pve-monitor.env
+*.env
+!*.env.example
+*.log
+*.swp

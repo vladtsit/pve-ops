@@ -1,0 +1,3 @@
+# /etc/cron.d/pve-pressure-monitor
+# Run pressure monitor every 5 minutes
+*/5 * * * * root /usr/local/sbin/pve-pressure-monitor.sh >/dev/null 2>&1

@@ -1,0 +1,13 @@
+/var/log/pve-pressure-monitor.log
+/var/log/pve-offsite-onedrive.log
+/var/log/pve-config-snapshot.log
+/var/log/smartd-alert.log
+{
+    weekly
+    rotate 8
+    compress
+    delaycompress
+    missingok
+    notifempty
+    copytruncate
+}
