@@ -115,6 +115,33 @@ for VMID in "${VMIDS[@]}"; do
     SUMMARY+="VM $VMID: $SIZE_GB GB"$'\n'
 done
 
+
+### RESTORE-SYNC-BLOCK ###
+# Mirror the local pve-restore-*.tar.gz.gpg snapshots to OneDrive:proxmox-offsite/restore/
+# `rclone sync` makes the remote match the local dir, so local retention (KEEP=8)
+# propagates automatically. Tarballs are GPG-symmetric encrypted at rest.
+RESTORE_LOCAL=/mnt/nvme/backups/pve-config
+RESTORE_REMOTE=$REMOTE/restore
+if compgen -G "$RESTORE_LOCAL/pve-restore-*.tar.gz.gpg" >/dev/null; then
+    log "restore: syncing $RESTORE_LOCAL -> $RESTORE_REMOTE"
+    if rclone sync $RCLONE_FLAGS \
+        --include "pve-restore-*.tar.gz.gpg" \
+        "$RESTORE_LOCAL/" "$RESTORE_REMOTE/" 2>&1 | tee -a "$LOG"; then
+        RCOUNT=$(ls -1 "$RESTORE_LOCAL"/pve-restore-*.tar.gz.gpg 2>/dev/null | wc -l)
+        RBYTES=$(du -cb "$RESTORE_LOCAL"/pve-restore-*.tar.gz.gpg 2>/dev/null | tail -1 | cut -f1)
+        RGB=$(awk -v b=${RBYTES:-0} 'BEGIN{printf "%.2f", b/1073741824}')
+        log "restore: $RCOUNT snapshots, $RGB GB total"
+        SUMMARY+="Restore: $RCOUNT snapshots ($RGB GB)"$'\n'
+    else
+        log "restore: SYNC FAILED"
+        SUMMARY+="Restore: SYNC FAILED"$'\n'
+        FAILED=$((FAILED+1))
+    fi
+else
+    log "restore: no local snapshots in $RESTORE_LOCAL (skip)"
+fi
+### /RESTORE-SYNC-BLOCK ###
+
 # Prune
 prune_remote() {
     local remote=$1 vmid=$2 keep=$3
