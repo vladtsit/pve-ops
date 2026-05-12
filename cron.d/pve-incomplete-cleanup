@@ -1,0 +1,6 @@
+# /etc/cron.d/pve-incomplete-cleanup
+# Daily prune of torrent staging dirs (files older than 7 days)
+SHELL=/bin/bash
+PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
+
+30 04 * * * root /usr/local/sbin/pve-incomplete-cleanup.sh >/dev/null 2>&1
