@@ -1,5 +1,6 @@
 #!/bin/bash
 # Sends Saturday 10:00 health summary via Pushover.
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 . /etc/pve-monitor.env
 TOKEN="$PUSHOVER_TOKEN"
 USER_KEY="$PUSHOVER_USER"

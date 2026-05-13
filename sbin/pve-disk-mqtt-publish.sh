@@ -1,5 +1,6 @@
 #!/bin/bash
 # Publishes per-disk SMART state to MQTT + Home Assistant discovery topics.
+export PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 . /etc/pve-monitor.env
 HOST_ID="proxmox"
 DEVICE_JSON='{"identifiers":["pve_disks_proxmox"],"name":"Proxmox Disks","manufacturer":"Intel NUC10i3FNH","model":"PVE 9.1"}'
