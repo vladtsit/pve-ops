@@ -1,0 +1,4 @@
+- .rclone-sync.log
+- .obsidian/workspace*
+- .obsidian/cache
+- .trash/**

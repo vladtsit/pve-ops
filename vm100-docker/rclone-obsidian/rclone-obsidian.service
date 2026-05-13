@@ -1,0 +1,9 @@
+[Unit]
+Description=rclone bisync Obsidian vault <-> OneDrive
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/rclone bisync OneDrive:Documents/Obsidian/Default/ /opt/stacks/hermes-vladtsit/obsidian/ --filters-file %h/.config/rclone/obsidian-filter.txt --log-file /opt/stacks/hermes-vladtsit/obsidian/.rclone-sync.log --log-level INFO
+Nice=10
