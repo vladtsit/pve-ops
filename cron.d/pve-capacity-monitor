@@ -1,0 +1,4 @@
+# /etc/cron.d/pve-capacity-monitor
+# Warn via Pushover + MQTT if NVMe or OneDrive can't fit the next backup.
+# Runs daily at 02:30 (before vzdump 03:00 and before Sunday off-site 04:00).
+30 2 * * * root /usr/local/sbin/pve-capacity-monitor.sh >/dev/null 2>&1
