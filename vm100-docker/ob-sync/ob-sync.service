@@ -1,0 +1,17 @@
+[Unit]
+Description=Obsidian Headless Sync (continuous) for hermes-vladtsit vault
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+WorkingDirectory=/opt/stacks/hermes-vladtsit/obsidian
+ExecStart=/usr/bin/ob sync --continuous
+Restart=on-failure
+RestartSec=15s
+Nice=10
+StandardOutput=append:/opt/stacks/hermes-vladtsit/obsidian/.ob-sync.log
+StandardError=append:/opt/stacks/hermes-vladtsit/obsidian/.ob-sync.log
+
+[Install]
+WantedBy=default.target
