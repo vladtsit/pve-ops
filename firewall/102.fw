@@ -1,0 +1,14 @@
+[OPTIONS]
+enable: 1
+policy_in: ACCEPT
+policy_out: ACCEPT
+
+[RULES]
+# Allow DNS to LAN gateway/router (so apt update etc still resolve)
+OUT ACCEPT -dest 192.168.3.1 -p udp -dport 53 -log nolog
+OUT ACCEPT -dest 192.168.3.1 -p tcp -dport 53 -log nolog
+# Block any other traffic from VM 102 to LAN / RFC1918 (isolates VPN clients from local network)
+OUT DROP -dest 192.168.3.0/24 -log nolog
+OUT DROP -dest 10.0.0.0/8 -log nolog
+OUT DROP -dest 172.16.0.0/12 -log nolog
+OUT DROP -dest 192.168.0.0/16 -log nolog
